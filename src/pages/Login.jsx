@@ -1,4 +1,4 @@
-export const Login = () => {
+export default function Login() {
   return (
     <form>
       <label for="email">email</label>
@@ -19,4 +19,4 @@ export const Login = () => {
       <button>Log in</button>
     </form>
   );
-};
+}
