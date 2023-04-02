@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Other from "./pages/Other";
-
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
+import { useState } from "react";
 
 function App() {
   return (
