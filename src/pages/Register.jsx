@@ -1,10 +1,42 @@
-import React,{ useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Register = () => {
-    return(
-        <>Register</>
-    )
-} 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({ email, password });
+  };
 
-{/* Now you just need to make it so if you click the button "dont alredy have an account" it'll link to the register page which is what your
-creating here. go into the Nav jsx file and use the Link module to do this. Then just follow the same steps you did for the login page*/}
+  return (
+    <div>
+      <form className="flex flex-col" onSubmit={handleSubmit}>
+        <h1 className="text-2xl text-center">Register Here</h1>
+        <label>Email</label>
+        <input
+          className="border-black border rounded-lg p-1"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="youremail@gmail.com"
+        />
+        <label>Password</label>
+        <input
+          className="border-black border rounded-lg p-1"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          placeholder="Enter Password"
+        />
+        <button className="rounded-lg bg-black text-white mt-2 p-2">
+          Register Now
+        </button>
+        <div>
+          Already have an account?{" "}
+          <Link to={"/login"} className="hover:underline">
+            Login here!
+          </Link>
+        </div>{" "}
+      </form>
+    </div>
+  );
+};
