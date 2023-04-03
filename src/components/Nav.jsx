@@ -7,7 +7,7 @@ export default function Nav() {
         LivingLink
       </Link>
       <Link className="hover:underline" to={"/other"}>
-        Other Pages😁
+        Test Backend😁
       </Link>
       <Link className="hover:underline" to={"/login"}>
         Profile
