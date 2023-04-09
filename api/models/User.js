@@ -4,9 +4,9 @@ const { Schema, model } = mongoose;
 const userSchema = new Schema({
   name: String,
   email: { type: String, unique: true },
-  phone_number: Number,
-  birth_date: Date,
-  password: String,
+  phone: Number,
+  date: Date,
+  password: String, // Will be hashed
 });
 
 const userModel = model("UserModel", userSchema);
