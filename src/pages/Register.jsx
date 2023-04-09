@@ -1,62 +1,93 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import DatePicker from "react-date-picker";
+import axios from "axios";
 
 export const Register = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(0);
+  const [date, setDate] = useState(new Date());
   const [password, setPassword] = useState("");
-  const [FirstName, setFirstName] = useState("");
-  const [LastName, setLastName] = useState("");
 
-  const [date, onChange] = useState(new Date());
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, password, FirstName, LastName });
+
+    // Register user with backend
+    axios
+      .post("/register", {
+        name: `${lastName}, ${firstName}`,
+        email,
+        phone,
+        date,
+        password,
+      })
+      .then((res) => {
+        const data = res.data;
+        if (data.isDuplicate) {
+          alert("An account with this email already exists!");
+        } else {
+          alert("New account has been created. You may now log in.");
+        }
+      });
   };
 
   return (
     <div>
       <h1 className="text-2xl text-center pb-4">Register Here</h1>
-      <input
-        className="border-black border rounded-lg p-1"
-        value={FirstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        placeholder="First Name"
-      />
-      &nbsp;
-      <input
-        className="border-black border rounded-lg p-1"
-        value={LastName}
-        onChange={(e) => setLastName(e.target.value)}
-        placeholder="Last Name"
-      />
       <form className="flex flex-col" onSubmit={handleSubmit}>
-        <label>Emaill</label>
+        <div>
+          <input
+            className="border-black border rounded-lg p-1"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First Name"
+          />
+          &nbsp;
+          <input
+            className="border-black border rounded-lg p-1"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Last Name"
+          />
+        </div>
+        <label>Email</label>
         <input
+          type="email"
           className="border-black border rounded-lg p-1"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="youremail@gmail.com"
+          placeholder="Name@gmail.com"
+        />
+        <label>Phone Number</label>
+        <input
+          type="number"
+          className="border-black border rounded-lg p-1"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="XXX-XXX-XXXX"
         />
         <label>Password</label>
         <input
+          type="password"
           className="border-black border rounded-lg p-1"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           placeholder="Enter Password"
         />
         <label>Date of Birth</label>
-        <DatePicker onChange={onChange} value={date} />
+        <DatePicker onChange={setDate} value={date} />
         <button className="rounded-lg bg-black text-white mt-2 p-2">
           Register Now
         </button>
-        <div>
-          Already have an account?{" "}
-          <Link to={"/login"} className="hover:underline">
-            Login here!
-          </Link>
-        </div>{" "}
       </form>
+      <div>
+        Already have an account?{" "}
+        <Link to={"/login"} className="hover:underline">
+          Login here!
+        </Link>
+      </div>{" "}
     </div>
   );
 };
