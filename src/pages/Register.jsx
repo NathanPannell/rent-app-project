@@ -1,93 +1,92 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import DatePicker from "react-date-picker";
 import axios from "axios";
 
 export const Register = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState(0);
-  const [date, setDate] = useState(new Date());
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Register user with backend
-    axios
-      .post("/register", {
-        name: `${lastName}, ${firstName}`,
-        email,
-        phone,
-        date,
-        password,
-      })
-      .then((res) => {
-        const data = res.data;
-        if (data.isDuplicate) {
-          alert("An account with this email already exists!");
-        } else {
-          alert("New account has been created. You may now log in.");
-        }
-      });
+    if (password === confirmPassword) {
+      // Register user with backend
+      axios
+        .post("/register", {
+          name,
+          email,
+          phone: null,
+          date: null,
+          password,
+        })
+        .then((res) => {
+          const data = res.data;
+          if (data.isDuplicate) {
+            alert("An account with this email already exists!");
+          } else {
+            alert("New account has been created. You may now log in.");
+          }
+        });
+    } else {
+      alert("Passwords do not match. Please check and try again.");
+    }
   };
 
   return (
-    <div>
-      <h1 className="text-2xl text-center pb-4">Register Here</h1>
-      <form className="flex flex-col" onSubmit={handleSubmit}>
-        <div>
+    <div className="w-screen flex flex-row m-4 gap-8 items-center justify-evenly h-screen">
+      <div className="w-1/2 self-center">
+        <form
+          className="flex flex-col self-center max-w-sm m-auto"
+          onSubmit={handleSubmit}
+        >
+          <h1 className="text-2xl">Create an account</h1>
           <input
-            className="border-black border rounded-lg p-1"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            placeholder="First Name"
+            className="border-b-2 pb-2 pt-4 !outline-none"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
           />
-          &nbsp;
           <input
-            className="border-black border rounded-lg p-1"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            placeholder="Last Name"
+            type="email"
+            className="border-b-2 pb-2 pt-4 !outline-none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
           />
-        </div>
-        <label>Email</label>
-        <input
-          type="email"
-          className="border-black border rounded-lg p-1"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Name@gmail.com"
-        />
-        <label>Phone Number</label>
-        <input
-          type="number"
-          className="border-black border rounded-lg p-1"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="XXX-XXX-XXXX"
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          className="border-black border rounded-lg p-1"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          placeholder="Enter Password"
-        />
-        <label>Date of Birth</label>
-        <DatePicker onChange={setDate} value={date} />
-        <button className="rounded-lg bg-black text-white mt-2 p-2">
-          Register Now
-        </button>
-      </form>
-      <div>
-        Already have an account?{" "}
-        <Link to={"/login"} className="hover:underline">
-          Login here!
-        </Link>
-      </div>{" "}
+          <input
+            type="password"
+            className="border-b-2 pb-2 pt-4 !outline-none"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            placeholder="Password"
+          />
+          <input
+            type="password"
+            className={`border-b-2 pb-2 pt-4 !outline-none ${
+              confirmPassword != password ? "text-red-800" : "text-black"
+            }`}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={confirmPassword}
+            placeholder="Confirm Password"
+          />
+          <button className="rounded-full border-2 transition-all border-black bg-black text-white mt-8 p-2 hover:bg-transparent hover:text-black">
+            Create Account
+          </button>
+          <div>
+            Already have an account?
+            <br />
+            <Link to={"/login"} className="hover:underline text-slate-500">
+              Login here!
+            </Link>
+          </div>
+        </form>
+      </div>
+      <img
+        className="max-h-full overflow-hidden hidden sm:block"
+        src="https://previews.123rf.com/images/ottoblotto/ottoblotto1909/ottoblotto190900005/131994867-ivy-covered-professional-or-residential-building-in-an-urban-setting-vertical-aspect.jpg"
+      />
     </div>
   );
 };
