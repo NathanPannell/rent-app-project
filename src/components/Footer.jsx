@@ -5,7 +5,7 @@ export default function Footer() {
         <li>Contact Us 📞</li>
         <li>List a Place 📃</li>
         <li>Find a Place 🔍</li>
-        <li>FInd Roommates 😁</li>
+        <li>Find Roommates 😁</li>
       </ul>
       <div>Other footer content here</div>
     </div>
