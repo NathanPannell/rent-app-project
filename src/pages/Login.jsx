@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -7,7 +8,19 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, password });
+
+    // Register user with backend
+    axios
+      .post("/login", {
+        email,
+        password,
+      })
+      .then((res) => {
+        const data = res.data;
+        if (data.msg) {
+          alert(data.msg);
+        }
+      });
   };
 
   return (
@@ -16,6 +29,7 @@ export default function Login() {
         <h1 className="text-2xl text-center">Login Here</h1>
         <label>Email</label>
         <input
+          type="email"
           className="border-black border rounded-lg p-1"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -23,6 +37,7 @@ export default function Login() {
         />
         <label>Password</label>
         <input
+          type="password"
           className="border-black border rounded-lg p-1"
           onChange={(e) => setPassword(e.target.value)}
           value={password}

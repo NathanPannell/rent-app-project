@@ -23,10 +23,8 @@ export const Register = () => {
         })
         .then((res) => {
           const data = res.data;
-          if (data.isDuplicate) {
-            alert("An account with this email already exists!");
-          } else {
-            alert("New account has been created. You may now log in.");
+          if (data.msg) {
+            alert(data.msg);
           }
         });
     } else {
