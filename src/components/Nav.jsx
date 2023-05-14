@@ -17,8 +17,11 @@ export default function Nav() {
         <Link className="hover:underline" to={"/"}>
           LivingLink
         </Link>
-        <Link className="hidden sm:block hover:underline" to={"/other"}>
-          Test Backend😁
+        <Link
+          className="hidden sm:block hover:underline"
+          to={"/create-listing"}
+        >
+          Create Listing 😁
         </Link>
         <Link className="hidden sm:block hover:underline" to={"/login"}>
           Profile
@@ -47,8 +50,11 @@ export default function Nav() {
             : "transform opacity-0 scale-y-0"
         }`}
       >
-        <Link className="hover:underline border-b-2 py-4" to={"/other"}>
-          Test Backend😁
+        <Link
+          className="hover:underline border-b-2 py-4"
+          to={"/create-listing"}
+        >
+          Create Listing 😁
         </Link>
         <Link className="hover:underline py-4" to={"/login"}>
           Profile

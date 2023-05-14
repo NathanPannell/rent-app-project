@@ -24,6 +24,8 @@ const saltRounds = 10;
 
 // Importing mongo Models
 const UserModel = require("./models/User.js");
+const ListingModel = require("./models/Listing.js");
+
 // Connecting to mongodb backend
 const { default: mongoose } = require("mongoose");
 const db = mongoose.connection;
@@ -60,14 +62,17 @@ app.post("/register", async (req, res) => {
         // Hashing password
         password = await bcrypt.hash(password, saltRounds);
         // Creating user document in MongoDB
-        await UserModel.create({
+        const newUser = await UserModel.create({
           name,
           email,
           phone,
           date,
           password,
         });
-        res.json({ msg: "New account has been created. You may now log in." });
+        res.status(200).json({
+          msg: "New account has been created. You may now log in.",
+          user: newUser,
+        });
       } catch (e) {
         res.status(422).json(e);
         console.log(e);
@@ -100,5 +105,39 @@ app.post("/login", async (req, res) => {
     }
   } else {
     res.json({ msg: "Email was not found." });
+  }
+});
+
+// Create a new listing
+app.post("/create-listing", async (req, res) => {
+  try {
+    const {
+      name,
+      price,
+      location,
+      bedrooms,
+      bathrooms,
+      description,
+      propertyType,
+      squareFootage,
+    } = req.body;
+
+    const newListing = await ListingModel.create({
+      name,
+      price,
+      location,
+      bedrooms,
+      bathrooms,
+      description,
+      propertyType,
+      squareFootage,
+    });
+
+    res
+      .status(200)
+      .json({ msg: "New listing has been created.", listing: newListing });
+  } catch (e) {
+    res.status(422).json(e);
+    console.log(e);
   }
 });

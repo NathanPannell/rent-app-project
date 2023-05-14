@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
-import Other from "./pages/Other";
+import CreateListing from "./pages/CreateListing";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -17,7 +17,7 @@ function App() {
       <div className="min-h-screen flex justify-center">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/other" element={<Other />} />
+          <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
